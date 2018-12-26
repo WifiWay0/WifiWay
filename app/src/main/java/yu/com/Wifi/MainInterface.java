@@ -33,7 +33,6 @@ public class MainInterface extends AppCompatActivity {
     private BaiduMap baiduMap;
     private boolean isFirstLocate = true;
     public static String loc;
-    private int flag=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
