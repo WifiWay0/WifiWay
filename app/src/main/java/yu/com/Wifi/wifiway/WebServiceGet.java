@@ -1,5 +1,6 @@
 package yu.com.Wifi.wifiway;
 
+import android.os.Looper;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -12,8 +13,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
-import yu.com.Wifi.MainActivity;
 import yu.com.Wifi.MainInterface;
+
 
 /**
  * 使用get方法获取Http服务器数据
@@ -26,7 +27,7 @@ public class WebServiceGet {
         InputStream in = null;
 
         try{
-            String Url = "http:/192.168.43.107:8080/Web/" + address;
+            String Url = "http:/39.108.0.16/Web/" + address;
             String path = Url + "?username=" + username + "&password=" + password;
             Log.i("WebServiceGet", "Url="+Url);
             Log.i("WebServiceGet", "path="+path);
@@ -88,19 +89,28 @@ public class WebServiceGet {
         return null;
     }
 
-    public static String appexecuteHttpGet(String appmessage,String address){//APP使用情况
+    public static String appexecuteHttpGet(String appmessage,String address){//APP数据
         HttpURLConnection connection = null;
         InputStream in = null;
-        Login muser = new Login();
         Time mtime = new Time();
         MainInterface mmap = new MainInterface();
+        String netType;
+        switch (Login.networkState) {
+            case 0:netType="null Internet";break;
+            case 1:netType="wifi";Login.operatorName=Login.SSID;break;
+            case 2:netType="2G";break;
+            case 3:netType="3G";break;
+            case 4:netType="4G";break;
+            case 5:netType="traffic";break;
+            default:netType="null";
+        }
         try{
-            String Url = "http:/192.168.43.107:8080/Web/" + address;
+            String Url = "http://39.108.0.16/Web/" + address;
             String path;
-            if(muser.user!=null){
+            if(Login.user!=null){
                 String time = Time.TimeOut();
                 String location = MainInterface.loc;
-                path = Url + "?user=" + URLEncoder.encode(muser.user, "UTF-8") +"&time=" + URLEncoder.encode(time, "UTF-8") +"&location=" + URLEncoder.encode(location, "UTF-8") +"&appmessage=" + URLEncoder.encode(appmessage, "UTF-8") ;
+                path = Url + "?user=" + URLEncoder.encode(Login.user, "UTF-8") +"&time=" + URLEncoder.encode(time, "UTF-8") +"&location=" + URLEncoder.encode(location, "UTF-8")+"&netType=" + URLEncoder.encode(netType, "UTF-8")+"&netmessage=" + URLEncoder.encode(Login.operatorName, "UTF-8") +"&appmessage=" + URLEncoder.encode(appmessage, "UTF-8") ;
             }else
                return null;
             Log.e("WebServiceGet", "Url="+Url);

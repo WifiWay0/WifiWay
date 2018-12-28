@@ -6,12 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.BatteryStats;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.ServiceManager;
 import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -32,7 +32,6 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-import yu.com.Wifi.MainActivity;
 import yu.com.Wifi.MainInterface;
 import yu.com.Wifi.R;
 import yu.com.Wifi.TopActivityViewer;
@@ -53,11 +52,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     public static String user;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
-
+    public static String SSID;      //wifiSSID
+    public static int networkState; //网络类型
+    public static String operatorName; //运营商
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SSID = getSSID();
+        networkState = NetUtils.getNetworkState(this);
+        operatorName = NetUtils.getOperatorName(this);
         //通过id找到相应的控件
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         mAccount = (EditText) findViewById(R.id.edit_account);
@@ -168,6 +172,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 dialog.dismiss();
             }
         });
+    }
+
+    public String getSSID() {
+        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        if (wm != null) {
+            WifiInfo winfo = wm.getConnectionInfo();
+            if (winfo != null) {
+                String s = winfo.getSSID();
+                if (s.length() > 2 && s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"') {
+                    return s.substring(1, s.length() - 1);
+                }
+            }
+        }
+        return "";
     }
 
 //    public void login() {    //登录按钮监听事件

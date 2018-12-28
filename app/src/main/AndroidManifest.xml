@@ -53,7 +53,7 @@
             android:process=":remote" />
 
         <activity android:name=".MainInterface" />
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SettingActivity" />
     </application>
 
 </manifest>

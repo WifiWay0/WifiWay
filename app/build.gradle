@@ -31,5 +31,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/mysql-connector-java-5.1.35.jar')
-    implementation files('libs/android.jar')
 }
