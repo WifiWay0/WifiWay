@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
@@ -67,7 +68,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             String RegRet = WebServicePost.executeHttpPost(mAccount.getText().toString(),mPwd.getText().toString(),"RegLet");
 
             //更新UI，界面处理
-            showReq(RegRet);
+            if(RegRet!=null) {
+                showReq(RegRet);
+            }else{
+                Looper.prepare();
+                dialog.dismiss();
+                Toast.makeText(Register.this,"无法连接服务器！", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
         }
     }
     private void showReq(final String RegRet){

@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 //            mUserDataManager = new UserDataManager(this);
 //            mUserDataManager.openDataBase();        //建立本地数据库
 //        }
-        List<String> permissionList = new ArrayList<>();
+        List<String> permissionList = new ArrayList<>();    //获取权限
         if (ContextCompat.checkSelfPermission(this, Manifest.
                 permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -153,7 +153,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             infoString = WebServiceGet.executeHttpGet(mAccount.getText().toString(),mPwd.getText().toString(),"LogLet");//获取服务器返回的数据
 
             //更新UI，使用runOnUiThread()方法
-            showResponse(infoString);
+            if(infoString!=null) {
+                showResponse(infoString);
+            }else{
+                Looper.prepare();
+                dialog.dismiss();
+                Toast.makeText(Login.this,"无法连接服务器！", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
         }
     }
 
@@ -162,8 +169,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             //更新UI
             @Override
             public void run() {
-                if(response.equals("false")){
-                    Toast.makeText(Login.this,"登录失败！", Toast.LENGTH_SHORT).show();
+                if(response.equals("false")) {
+                    Toast.makeText(Login.this, "登录失败！", Toast.LENGTH_SHORT).show();
                 }else {
                     Intent intent = new Intent(Login.this,MainInterface.class) ;    //切换Login Activity至User Activity
                     startActivity(intent);

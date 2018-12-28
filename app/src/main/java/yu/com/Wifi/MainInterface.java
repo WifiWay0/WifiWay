@@ -45,8 +45,8 @@ public class MainInterface extends AppCompatActivity {
         mapView = findViewById(R.id.bmapView);
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
-
         requestLocation();
+
         Wifi_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +118,7 @@ public class MainInterface extends AppCompatActivity {
                     || location.getLocType() == BDLocation.TypeNetWorkLocation) {
                 nevigateTo(location);
             }
-            StringBuilder currentPosition =new StringBuilder();
+            StringBuilder currentPosition = new StringBuilder();
             currentPosition.append("纬度:").append(location.getLatitude());
             currentPosition.append("经线:").append(location.getLongitude());
             currentPosition.append(location.getCountry());
@@ -127,10 +127,10 @@ public class MainInterface extends AppCompatActivity {
             currentPosition.append(location.getDistrict());
             currentPosition.append(location.getStreet());
             currentPosition.append("定位方式:");
-            if(location.getLocType()==BDLocation.TypeGpsLocation){
+            if (location.getLocType() == BDLocation.TypeGpsLocation) {
                 currentPosition.append("GPS");
-            }else if(location.getLocType()==BDLocation.TypeNetWorkLocation){
-                currentPosition.append("网络");
+            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
+                    currentPosition.append("网络");
             }
             loc = currentPosition.toString();
         }

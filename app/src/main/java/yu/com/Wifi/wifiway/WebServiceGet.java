@@ -92,8 +92,6 @@ public class WebServiceGet {
     public static String appexecuteHttpGet(String appmessage,String address){//APP数据
         HttpURLConnection connection = null;
         InputStream in = null;
-        Time mtime = new Time();
-        MainInterface mmap = new MainInterface();
         String netType;
         switch (Login.networkState) {
             case 0:netType="null Internet";break;
