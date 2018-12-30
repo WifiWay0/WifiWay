@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -133,6 +134,7 @@ public class MainInterface extends AppCompatActivity {
                     currentPosition.append("网络");
             }
             loc = currentPosition.toString();
+            Log.e("MainInterface", "onReceiveLocation: "+loc );
         }
     }
 

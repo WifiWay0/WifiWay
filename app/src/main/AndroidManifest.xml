@@ -33,7 +33,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="T5b9wpYG4LTGzyjG0gcnf5fmNFlkQe9D" />
+            android:value="pltooNKCA22Cm8EGb0n7QDyL0v9BpGMA" />
 
         <activity android:name=".MainActivity" />
         <activity android:name=".wifitest.activity_main" />
